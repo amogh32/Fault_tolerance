@@ -27,6 +27,7 @@ public class Client_total {
                 writer.write(5 + ":" + rno + "\n");
                 writer.flush();
                 String output = reader.readLine();
+                //System.out.println(output);
                 if(output.equals("-1"))
                 {
                     continue;

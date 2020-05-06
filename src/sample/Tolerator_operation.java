@@ -31,7 +31,7 @@ public class Tolerator_operation
             if (info[0].equals("1"))
             {
                 int a=File_operations.exists(Integer.parseInt(info[2]),"port_"+port);
-                System.out.println("Request for "+info[2]+" received");
+                System.out.println("Request for "+info[2]+" received at port "+port);
                 //System.out.println(a);
                 writer.write(a+"\n");
                 writer.flush();
@@ -40,7 +40,7 @@ public class Tolerator_operation
             {
                 Worker_list list1=new Worker_list();
                 int l=list1.getWorker_list().getLen();
-                System.out.println("Request for "+info[2]+" received");
+                System.out.println("Request for "+info[2]+" received at port "+port);
                 Random ra=new Random();
                 int st=ra.nextInt(l),j,k,d=0;
                 String put="";
@@ -93,7 +93,9 @@ public class Tolerator_operation
             }
             else if(info[0].equals("5"))
             {
+                System.out.println("Request for "+info[1]+" received at port "+port);
                 String se=File_operations.type_5("port_"+port,info[1]);
+                //System.out.println(se);
                 if(se.equals("-1"))
                 {
                     writer.write(se+"\n");
@@ -103,33 +105,105 @@ public class Tolerator_operation
                 {
                     String[] arr=se.split(",");
                     int i;
-                    for(i=0;i<Extras.data_replication;i++)
+
+                    Random ra=new Random();
+                    int st=ra.nextInt(Extras.data_replication),j,k;
+                    String put="";
+                    for(j=0;j<Extras.data_replication;j++)
                     {
+                        k=(st+j)%Extras.data_replication;
                         try
                         {
-                            Socket worker_socket=new Socket(arr[2*i].trim(),Integer.parseInt(arr[2*i+1].trim()));
+                            Socket worker_socket=new Socket(arr[2*k].trim(),Integer.parseInt(arr[2*k+1].trim()));
                             OutputStreamWriter write11= new OutputStreamWriter(worker_socket.getOutputStream(), StandardCharsets.UTF_8);
                             BufferedWriter writer11 = new BufferedWriter(write11);
                             InputStreamReader read11=new InputStreamReader(worker_socket.getInputStream(),StandardCharsets.UTF_8);
                             BufferedReader reader11 = new BufferedReader(read11);
 
+
                             writer11.write(output + "\n");
                             writer11.flush();
 
                             String output1 = reader11.readLine();
-
-                            d++;
-                            put+=","+list1.getWorker_list().get_server_info(k).getAddress()+","+list1.getWorker_list().get_server_info(k).getPort();
-                            if(d==Extras.data_replication)
+                            if(output1.equals("-1"))
                             {
-                                break;
+
                             }
+                            else
+                            {
+                                writer.write(output1+"\n");
+                                writer.flush();
+                                return;
+                            }
+
                         }
                         catch(Exception e)
                         {
-                            System.out.println("Port "+list1.getWorker_list().get_server_info(k).getPort()+" unreachable");
+                            System.out.println("Port "+arr[2*k+1]+" unreachable");
                         }
+
                     }
+                    writer.write("-1\n");
+                    writer.flush();
+
+                }
+
+            }
+            else if(info[0].equals("6"))
+            {
+                System.out.println("Request for "+info[1]+" for subject "+Student_info.short_form[Integer.parseInt(info[2])]+" received at port "+port);
+                String se=File_operations.type_5("port_"+port,info[1]);
+                //System.out.println(se);
+                if(se.equals("-1"))
+                {
+                    writer.write(se+"\n");
+                    writer.flush();
+                }
+                else
+                {
+                    String[] arr=se.split(",");
+                    int i;
+
+                    Random ra=new Random();
+                    int st=ra.nextInt(Extras.data_replication),j,k;
+                    String put="";
+                    for(j=0;j<Extras.data_replication;j++)
+                    {
+                        k=(st+j)%Extras.data_replication;
+                        try
+                        {
+                            Socket worker_socket=new Socket(arr[2*k].trim(),Integer.parseInt(arr[2*k+1].trim()));
+                            OutputStreamWriter write11= new OutputStreamWriter(worker_socket.getOutputStream(), StandardCharsets.UTF_8);
+                            BufferedWriter writer11 = new BufferedWriter(write11);
+                            InputStreamReader read11=new InputStreamReader(worker_socket.getInputStream(),StandardCharsets.UTF_8);
+                            BufferedReader reader11 = new BufferedReader(read11);
+
+
+                            writer11.write(output + "\n");
+                            writer11.flush();
+
+                            String output1 = reader11.readLine();
+                            if(output1.equals("-1"))
+                            {
+
+                            }
+                            else
+                            {
+                                writer.write(output1+"\n");
+                                writer.flush();
+                                return;
+                            }
+
+                        }
+                        catch(Exception e)
+                        {
+                            System.out.println("Port "+arr[2*k+1]+" unreachable");
+                        }
+
+                    }
+                    writer.write("-1\n");
+                    writer.flush();
+
                 }
 
             }

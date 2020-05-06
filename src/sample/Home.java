@@ -69,7 +69,7 @@ public class Home
         b.addActionListener(e->
         {
 
-            //new SelectSubject().start();
+            new SelectSubject().start();
             f.dispose();
 
         });

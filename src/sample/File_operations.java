@@ -190,12 +190,38 @@ public class File_operations {
             Scanner re = new Scanner(f);
 
             int lines = Integer.parseInt(re.nextLine());
-            for(i=0;i<lines-1;i++)
+            for(i=0;i<lines;i++)
             {
                 String[] t=re.nextLine().split(":");
                 if(t[0].equals(rno))
                 {
                     return t[1];
+                }
+            }
+            re.close();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  "-1";
+    }
+
+    public static String worker_type_5(String fname,String rno)
+    {
+        int  i;
+        try {
+            File f = new File(fname);
+            Scanner re = new Scanner(f);
+
+            while (re.hasNextLine())
+            {
+                String ab=re.nextLine();
+                String[] t=ab.split(":");
+                if(t[0].equals(rno))
+                {
+                    return t[1]+":"+t[2];
                 }
             }
             re.close();

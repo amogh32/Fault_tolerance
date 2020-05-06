@@ -43,6 +43,7 @@ public class Tolerator_thread implements Runnable
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("Server started at Port - "+port);
             if(Tolerator.closed>0)
             {
                 Tolerator.closed--;
@@ -84,7 +85,7 @@ public class Tolerator_thread implements Runnable
         {
             if(server_soc.isClosed()==false)
             {
-                System.out.println("Server started at Port - "+port);
+
 
 
                 try {

@@ -6,10 +6,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class TotalMarks
@@ -85,11 +82,12 @@ public class TotalMarks
             }
         }
 
-        ArrayList<String> abc=new ArrayList<String>();
+        ArrayList<Integer> abc=new ArrayList<Integer>();
         for (String z:ab)
         {
-            abc.add(z);
+            abc.add(Integer.parseInt(z));
         }
+        Collections.sort(abc);
         count=abc.size();
 
         max=count/ Extras.page;
@@ -155,7 +153,7 @@ public class TotalMarks
 
         for(i=(Extras.cur-1)* Extras.page+1; i<=Math.min(Extras.cur* Extras.page,count); i++)
         {
-            rno[j]=new JLabel(abc.get(i-1));
+            rno[j]=new JLabel(abc.get(i-1)+"");
             rno[j].setBounds(a1,200+50*j,a1,50);
             f.add(rno[j]);
 
@@ -175,11 +173,11 @@ public class TotalMarks
             per[j].setBounds(9*a1,200+50*j,a1,50);
             f.add(per[j]);
 
-            /*int x=new Client_total(abc.get(i-1),j).run();
+            int x=new Client_total(abc.get(i-1)+"",j).run();
             if(x==1)
             {
                 JOptionPane.showMessageDialog(null, "Roll Number "+ abc.get(i-1) +" cannot be found from server");
-            }*/
+            }
 
             j++;
         }

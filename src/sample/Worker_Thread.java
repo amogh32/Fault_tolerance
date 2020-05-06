@@ -31,6 +31,7 @@ public class Worker_Thread implements Runnable
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("Server started at Port - "+port);
             if(Worker.closed>0)
             {
                 Worker.closed--;
@@ -72,7 +73,7 @@ public class Worker_Thread implements Runnable
         {
             if(server_soc.isClosed()==false)
             {
-                System.out.println("Server started at Port - "+port);
+
 
                     try {
                         Socket client=server_soc.accept();
