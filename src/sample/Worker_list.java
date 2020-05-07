@@ -12,6 +12,8 @@ public class Worker_list
         worker_list.add(new Server_info("localhost",14000));
         worker_list.add(new Server_info("localhost",15000));
         worker_list.add(new Server_info("localhost",16000));
+        worker_list.add(new Server_info("localhost",17000));
+        worker_list.add(new Server_info("localhost",18000));
     }
 
     public Server_List getWorker_list()

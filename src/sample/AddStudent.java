@@ -107,7 +107,7 @@ public class AddStudent
             {
                 to_send+=in[ij].getText()+",";
             }
-            to_send+=in[l+1].getText();
+            to_send+=in[l+1].getText()+":"+System.currentTimeMillis();
             int q=new Client_input().start(to_send);
             if(q==0)
             {

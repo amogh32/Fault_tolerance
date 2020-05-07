@@ -15,7 +15,7 @@ public class Worker
     {
         list=new Worker_list();
         len=list.getWorker_list().getLen();
-        max=Math.min(Extras.data_replication,len-Extras.data_replication);
+        max=Math.min((Extras.data_replication-1)/2,len-Extras.data_replication);
         int i;
         Worker_Thread[] workers=new Worker_Thread[len];
         Thread [] input=new Thread[len];

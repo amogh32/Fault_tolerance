@@ -50,6 +50,12 @@ public class Home
 
         f.add(b3);
 
+        JButton b4 = new JButton("Modify student details");
+
+        b4.setBounds((int)(8*w/16)-100,(int)(5*h/12)+100,200, 50);
+
+        f.add(b4);
+
         b1.addActionListener(e->
         {
 
@@ -70,6 +76,14 @@ public class Home
         {
 
             new SelectSubject().start();
+            f.dispose();
+
+        });
+
+        b4.addActionListener(e->
+        {
+
+            new SelectRollNo().start();
             f.dispose();
 
         });

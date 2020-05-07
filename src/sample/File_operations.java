@@ -4,9 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class File_operations {
     public static void create_file(String Filename, int type) {
@@ -57,6 +55,38 @@ public class File_operations {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static String exists_rno(int rno, String fname) {
+        int  i;
+        try {
+            File f = new File(fname);
+            Scanner re = new Scanner(f);
+
+            int lines = Integer.parseInt(re.nextLine());
+            Set<String> hash_Set = new HashSet<String>();
+            for (i = 0; i < lines; i++) {
+
+                hash_Set.add(re.nextLine());
+
+            }
+
+            re.close();
+
+
+            for(String a:hash_Set)
+            {
+                String[]arr= a.split(":");
+                if(arr[0].equals(rno+""))
+                {
+                    return a;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "0";
     }
 
     public static void add_server(String data, String fname) {
@@ -128,16 +158,32 @@ public class File_operations {
             {
                 lines[i]=Integer.parseInt(re[i].nextLine());
             }
-            Set<String> hash_Set = new HashSet<String>();
+            Map<String,String> hash_Set=new HashMap<String,String>();
             for(i=0;i<l;i++)
             {
                 for(j=0;j<lines[i];j++)
                 {
-                    hash_Set.add(re[i].nextLine());
+                    String found=re[i].nextLine();
+                    String[] arr=found.split(":");
+                    if(hash_Set.containsKey(arr[0]))
+                    {
+                        String[] found1=hash_Set.get(arr[0]).split(":");
+                        String found2=found1[found1.length-1];
+                        if(Long.parseLong(found2)<Long.parseLong(arr[arr.length-1]))
+                        {
+                            hash_Set.put(arr[0],found);
+                        }
+                    }
+                    else
+                    {
+                        hash_Set.put(arr[0],found);
+                    }
                 }
             }
+            Collection <String> hash=hash_Set.values();
             write=hash_Set.size()+"\n";
-            for (String a:hash_Set)
+
+            for (String a:hash)
             {
                 write+=a+"\n";
             }
@@ -221,7 +267,7 @@ public class File_operations {
                 String[] t=ab.split(":");
                 if(t[0].equals(rno))
                 {
-                    return t[1]+":"+t[2];
+                    return t[1]+":"+t[2]+":"+t[3];
                 }
             }
             re.close();
@@ -232,5 +278,95 @@ public class File_operations {
             e.printStackTrace();
         }
         return  "-1";
+    }
+
+    public static void merge_worker_file(String s)
+    {
+        int i,j;
+        String write;
+
+
+        try {
+            File f=new File(s);
+            Scanner re=new Scanner(f);
+            Map<String,String> hash_Set=new HashMap<String,String>();
+            while(re.hasNextLine())
+            {
+                String found=re.nextLine();
+                String[] arr=found.split(":");
+                if(hash_Set.containsKey(arr[0]))
+                {
+                    String[] found1=hash_Set.get(arr[0]).split(":");
+                    String found2=found1[found1.length-1];
+                    if(Long.parseLong(found2)<Long.parseLong(arr[arr.length-1]))
+                    {
+                        hash_Set.put(arr[0],found);
+                    }
+                }
+                else
+                {
+                    hash_Set.put(arr[0],found);
+                }
+            }
+
+            Collection <String> hash=hash_Set.values();
+            write="";
+
+            for (String a:hash)
+            {
+                write+=a+"\n";
+            }
+            re.close();
+            FileWriter myWriter = new FileWriter(s);
+            myWriter.write(write);
+            myWriter.close();
+
+        } catch (IOException e) {
+            return;
+        }
+    }
+
+    public static String modify_server_details(String s, String s1, String fname) {
+        int i;
+        String send="";
+        try {
+            File f = new File(fname);
+            Scanner re = new Scanner(f);
+
+            int lines = Integer.parseInt(re.nextLine());
+            Map<String, String> hash_Set = new HashMap<String, String>();
+
+            for (i = 0; i < lines; i++) {
+                String found = re.nextLine();
+                String[] arr = found.split(":");
+
+
+                if (arr[0].equals(s)) {
+                    found = found.substring(0, found.lastIndexOf(':') + 1) + s1;
+                    send=found;
+                }
+                hash_Set.put(arr[0], found);
+
+            }
+            String write;
+
+            Collection<String> hash = hash_Set.values();
+            write = hash_Set.size() + "\n";
+
+            for (String a : hash) {
+                write += a + "\n";
+            }
+
+            re.close();
+
+            FileWriter myWriter = new FileWriter(fname);
+            myWriter.write(write);
+            myWriter.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return send;
     }
 }

@@ -30,8 +30,17 @@ public class Worker_operation
             //System.out.println(output);
             String[] info=output.split(":");
             if(info[0].equals("2")) {
-                String put = info[2] + ":" + info[1] + ":"+info[3];
+                String put = info[2] + ":" + info[1] + ":"+info[3]+":"+info[4];
                 File_operations.add_data(put,"port_"+port);
+                writer.write("1\n");
+                writer.flush();
+
+
+            }
+            else if(info[0].equals("9")) {
+                String put = info[2] + ":" + info[1] + ":"+info[3]+":"+info[4];
+                File_operations.add_data(put,"port_"+port);
+                File_operations.merge_worker_file("port_"+port);
                 writer.write("1\n");
                 writer.flush();
 
@@ -66,7 +75,7 @@ public class Worker_operation
                 else
                 {
                     String[] u=put.split(":");
-                    put=u[0]+":"+u[1].split(",")[Integer.parseInt(info[2])];
+                    put=u[0]+":"+u[1].split(",")[Integer.parseInt(info[2])]+":"+u[2];
                     writer.write(put+"\n");
                     writer.flush();
                 }
