@@ -79,6 +79,8 @@ public class Tolerator_operation {
                 System.out.println("Request for " + info[1] + " received at port " + port);
                 String se = File_operations.type_5("port_" + port, info[1]);
                 //System.out.println(se);
+                String[] arrr1=se.split(":");
+                se=arrr1[0];
                 if (se.equals("-1")) {
                     writer.write(se + "\n");
                     writer.flush();
@@ -124,7 +126,10 @@ public class Tolerator_operation {
                         }
 
                     }
-                    if (vote_count >= Extras.vote) {
+                    String[] ar2=put1.split(":");
+                    //System.out.println(ar2[ar2.length-1]);
+                    //System.out.println(arrr1[1]);
+                    if (vote_count >= Extras.vote&&ar2[ar2.length-1].equals(arrr1[1])) {
                         writer.write(put1 + "\n");
                         writer.flush();
                     } else {
@@ -139,6 +144,8 @@ public class Tolerator_operation {
                 System.out.println("Request for " + info[1] + " for subject " + Student_info.short_form[Integer.parseInt(info[2])] + " received at port " + port);
                 String se = File_operations.type_5("port_" + port, info[1]);
                 //System.out.println(se);
+                String[] arrr1=se.split(":");
+                se=arrr1[0];
                 if (se.equals("-1")) {
                     writer.write(se + "\n");
                     writer.flush();
@@ -183,7 +190,9 @@ public class Tolerator_operation {
                         }
 
                     }
-                    if (vote_count >= Extras.vote) {
+                    String[] ar2=put1.split(":");
+
+                    if (vote_count >= Extras.vote&&ar2[ar2.length-1].equals(arrr1[1])) {
                         writer.write(put1 + "\n");
                         writer.flush();
                     } else {
@@ -250,7 +259,7 @@ public class Tolerator_operation {
                         }
 
                     }
-                    if (vote_count >= Extras.vote) {
+                    if (vote_count >= Extras.vote&&max==Long.parseLong(info[3])) {
                         //System.out.println(put1);
                         writer.write(put1 + "\n");
                         writer.flush();

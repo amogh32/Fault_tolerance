@@ -241,7 +241,7 @@ public class File_operations {
                 String[] t=re.nextLine().split(":");
                 if(t[0].equals(rno))
                 {
-                    return t[1];
+                    return t[1]+":"+t[2];
                 }
             }
             re.close();
