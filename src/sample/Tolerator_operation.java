@@ -273,6 +273,9 @@ public class Tolerator_operation {
             } else if (info[0].equals("9")) {
                 System.out.println("Request for " + info[2] + " received at port " + port);
                 String se = File_operations.type_5("port_" + port, info[2]);
+                //System.out.println(info[2]);
+                String[] arrr1=se.split(":");
+                se=arrr1[0];
                 if (se.equals("-1")) {
                     writer.write(se + "\n");
                     writer.flush();
@@ -314,7 +317,7 @@ public class Tolerator_operation {
                     if (vote_count >= Extras.vote) {
 
                         String ret=File_operations.modify_server_details(info[2],info[4], "port_" + port);
-                        System.out.println(ret);
+                        //System.out.println(ret);
 
                         writer.write(ret + "\n");
                         writer.flush();
